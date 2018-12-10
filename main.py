@@ -107,6 +107,14 @@ def filter(beni_dict, mal_dict):
     return beni_dict, mal_dict
 
 
+def sort_by_value(dict):
+    result_dict = {}
+    list = sorted(dict.items(), key=lambda asd: asd[1], reverse=True)
+    for item in list:
+        result_dict[item[0]] = item[1]
+    return result_dict
+
+
 def main():
     beni_train_path = "data/benign/small_train"
     mal_train_path = "data/malicious/small_train"
@@ -118,11 +126,10 @@ def main():
     beni_dict = create_dict(beni_train_path, 0)
     mal_dict = create_dict(mal_train_path, 1)
 
-    with open("beni_dict.json", 'w', encoding='utf-8') as json_file:
-        json.dump(beni_dict, json_file, ensure_ascii=False)
+    beni_dict = sort_by_value(beni_dict)
+    mal_dict = sort_by_value(mal_dict)
 
-    with open("mal_dict.json", 'w', encoding='utf-8') as json_file:
-        json.dump(mal_dict, json_file, ensure_ascii=False)
+    beni_dict, mal_dict = filter(beni_dict, mal_dict)
 
     count = 0
     for k in beni_dict.keys():
@@ -133,6 +140,12 @@ def main():
     for k in mal_dict.keys():
         count += 1
     print("count = {}\n".format(count))
+
+    with open("beni_dict.json", 'w', encoding='utf-8') as json_file:
+        json.dump(beni_dict, json_file, ensure_ascii=False)
+
+    with open("mal_dict.json", 'w', encoding='utf-8') as json_file:
+        json.dump(mal_dict, json_file, ensure_ascii=False)
 
 
 if __name__ == '__main__':
