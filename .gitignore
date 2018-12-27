@@ -4,3 +4,4 @@
 sample/*
 *.json
 *.pyc
+.DS_Store
