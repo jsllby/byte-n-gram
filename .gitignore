@@ -1,6 +1,6 @@
 
 *.iml
 *.xml
-data/*
+sample/*
 *.json
 *.pyc
